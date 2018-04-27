@@ -1,0 +1,16 @@
+{
+  "processors": ["@mapbox/stylelint-processor-arbitrary-tags"],
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix": true,
+    "property-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "string-quotes": "single",
+    "function-url-quotes": "always",
+    "selector-attribute-quotes": "always",
+    "declaration-no-important": true,
+    "number-leading-zero": "never"
+  }
+}

@@ -9,15 +9,15 @@ Microsoft teams for ubuntu platforms
 
 The thing force me to do this is, ubuntu platform was not supported by default, check below:
 
-![](https://raw.githubusercontent.com/leftstick/teams-ubuntu/master/doc/img/apps.png)
+![](doc/img/apps.png)
 
 That's weird, but ok we don't mind. [electron](http://electron.atom.io/) helps.
 
 Now you can download the ubuntu version: 
 
-[Microsoft-Teams-1.1.7-linux-64](https://github.com/leftstick/teams-ubuntu/releases/download/1.1.7/Microsoft-Teams-linux-x64.zip)
+[Microsoft-Teams-2.0-linux-64](releases/download/2.0/Microsoft-Teams-linux-x64.zip)
 
-[Microsoft-Teams-1.1.7-linux-32](https://github.com/leftstick/teams-ubuntu/releases/download/1.1.7/Microsoft-Teams-linux-ia32.zip)
+[Microsoft-Teams-2.0.linux-32](releases/download/2.0/Microsoft-Teams-linux-ia32.zip)
 
 ## Want to contribute?
 
