@@ -48,8 +48,6 @@ let startupOpts = {
 app.on('ready', function() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 
-  trayMenu.createTray();
-
   mainWindow = new BrowserWindow(startupOpts);
 
   mainWindow.loadURL(constants.DEFAULT_TEAMS_URL, {
@@ -66,4 +64,6 @@ app.on('ready', function() {
   });
 
   mainWindow.show();
+
+  trayMenu.createTray(mainWindow);
 });

@@ -20,7 +20,7 @@ module.exports = [
             maximizable: false,
             show:        true,
             title:       ''
-          }).loadURL('file://' + resolve(__dirname, 'about.html'));
+          }).loadURL('file://' + resolve(__dirname, '..', 'about.html'));
         }
       },
       {
