@@ -1,7 +1,6 @@
 'use strict';
 
 const {remote, webFrame} = require('electron');
-const {Menu, Tray} = remote;
 const constants = require('./constants');
 
 class TeamsPreload {
@@ -9,14 +8,10 @@ class TeamsPreload {
 
     /** @type {Electron.BrowserWindow} */
     this.remoteWindow = null;
-
-    /** @type {Electron.Tray} */
-    this.tray = null;
   }
 
   initialize() {
     this.remoteWindow = remote.getCurrentWindow();
-    this.tray = this.createTray();
 
     // authorize electron app to load local file inside teams app
     webFrame.registerURLSchemeAsBypassingCSP('file');
@@ -29,39 +24,6 @@ class TeamsPreload {
       },
       false
     );
-  }
-
-  /**
-   * @private
-   * @return {Electron.Tray}
-   */
-  createTray() {
-    let tray = new Tray(constants.getImagePath('favicon-32x32.png'));
-    tray.on('right-click', TeamsPreload.toggleWindow);
-    tray.on('double-click', TeamsPreload.toggleWindow);
-    tray.on('click', (event) => {
-      TeamsPreload.toggleWindow(this.remoteWindow);
-
-      // Show devTools when command clicked
-      if (window.isVisible() && process.defaultApp && event.metaKey) {
-        window.openDevTools({mode: 'detach'});
-      }
-    });
-
-    return tray;
-  }
-
-  /**
-   * @private
-   * @param {Electron.BrowserWindow} window
-   */
-  static toggleWindow(window) {
-    if (window.isVisible()) {
-      window.hide();
-    } else {
-      window.show();
-      window.focus();
-    }
   }
 
   /**

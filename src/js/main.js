@@ -8,6 +8,7 @@ const BrowserWindow = electron.BrowserWindow;
 const shell = electron.shell;
 const constants = require('./constants');
 const menus = require('./menus');
+const trayMenu = require('./trayMenu');
 
 let mainWindow = null;
 
@@ -46,6 +47,8 @@ let startupOpts = {
 
 app.on('ready', function() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
+
+  trayMenu.createTray();
 
   mainWindow = new BrowserWindow(startupOpts);
 
