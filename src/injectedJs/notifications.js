@@ -1,7 +1,7 @@
 /**
  * Teams notifications in Chrome
  */
-var TeamsNotifications = {
+let TeamsNotifications = {
   keepMessageContentPrivate: true,
   profileUrl:                null,
   myName:                    null,
@@ -11,7 +11,7 @@ var TeamsNotifications = {
 };
 
 TeamsNotifications.strip = function(html) {
-  var tmp       = document.createElement('div');
+  let tmp = document.createElement('div');
   tmp.innerHTML = html;
 
   return tmp.textContent || tmp.innerText || '';
@@ -21,9 +21,9 @@ TeamsNotifications.analyseMessages = function(messages) {
   console.debug('TeamsNotifications', 'original messages', messages);
 
   // filter messages
-  var mention               = false;
-  var resourceTypesToNotify = ['NewMessage', 'ConversationUpdate'];
-  messages                  = $.grep(messages, function(message, i) {
+  let mention = false;
+  let resourceTypesToNotify = ['NewMessage', 'ConversationUpdate'];
+  messages = $.grep(messages, function(message, i) {
     if (message.resource && message.resource.messagetype === 'Control/Typing') {
       return false;
     }
@@ -46,9 +46,9 @@ TeamsNotifications.analyseMessages = function(messages) {
 
   if (messages.length > 0) {
     console.debug('TeamsNotifications', 'filtered messages', messages);
-    var lastMessage = messages[messages.length - 1];
+    let lastMessage = messages[messages.length - 1];
 
-    var conversation = null;
+    let conversation = null;
 
     // deduce context
     if (lastMessage.resource.threadProperties) {
@@ -60,9 +60,9 @@ TeamsNotifications.analyseMessages = function(messages) {
     }
 
     // deduce conversation url
-    var url = null;
+    let url = null;
     if (lastMessage.resource && lastMessage.resource.conversationLink) {
-      var convId = lastMessage.resource.conversationLink.substr(
+      let convId = lastMessage.resource.conversationLink.substr(
         lastMessage.resource.conversationLink.lastIndexOf('/') + 1
       );
 
@@ -91,7 +91,7 @@ TeamsNotifications.analyseMessages = function(messages) {
     }
 
     // TODO for the moment ignore like message
-    var likeMessage = (
+    let likeMessage = (
       lastMessage.resource
       && lastMessage.resource.properties
       && lastMessage.resource.properties.activity
@@ -105,7 +105,7 @@ TeamsNotifications.analyseMessages = function(messages) {
     }
 
     // deduce author name
-    var imDisplayName = null;
+    let imDisplayName = null;
     if (
       lastMessage.resource
       && lastMessage.resource.imdisplayname
@@ -136,7 +136,7 @@ TeamsNotifications.analyseMessages = function(messages) {
 
     // TODO later add CTLSTools privacy settings
     if (!TeamsNotifications.keepMessageContentPrivate) {
-      var lastMessageContent = null;
+      let lastMessageContent = null;
       if (lastMessage.resource) {
         if (typeof lastMessage.resource.content !== 'undefined' && lastMessage.resource.content.length > 0) {
           lastMessageContent = lastMessage.resource.content;
@@ -153,7 +153,7 @@ TeamsNotifications.analyseMessages = function(messages) {
 
     if (conversation) {
       console.info('TeamsNotifications', 'notify user', conversation);
-      TeamsNotifications.notification         = new Notification(
+      TeamsNotifications.notification = new Notification(
         'Teams Notification',
         {
           body:               conversation,
@@ -186,7 +186,7 @@ TeamsNotifications.analyseMessages = function(messages) {
 };
 
 TeamsNotifications.overrideLoadPoll = function() {
-  var origOpen = XMLHttpRequest.prototype.open;
+  let origOpen = XMLHttpRequest.prototype.open;
 
   XMLHttpRequest.prototype.open = function(method, url, async) {
     // the first profile url is mine
@@ -197,7 +197,7 @@ TeamsNotifications.overrideLoadPoll = function() {
     this.addEventListener('load', function() {
       // if (this.responseURL.startsWith('https://api.teams.skype.com')) {
       if (this.response !== null) {
-        var responseText = this.response;
+        let responseText = this.response;
         if (typeof responseText === 'object') {
           responseText = JSON.stringify(responseText);
         }
@@ -208,7 +208,7 @@ TeamsNotifications.overrideLoadPoll = function() {
 
       // deduce my own name from first profile url
       if (TeamsNotifications.myName === null && this.responseURL === TeamsNotifications.profileUrl) {
-        var url                   = new URL(this.responseURL);
+        let url = new URL(this.responseURL);
         TeamsNotifications.myName = url.searchParams.get('displayname');
       }
 
@@ -274,7 +274,7 @@ function check() {
 }
 
 TeamsNotifications.hasFocus = document.hasFocus();
-TeamsNotifications.window   = window;
+TeamsNotifications.window = window;
 
 check();
 setInterval(check, 5000);

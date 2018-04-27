@@ -1,12 +1,15 @@
+'use strict';
+
 const {app, BrowserWindow} = require('electron');
-const {resolve}            = require('path');
+const {resolve} = require('path');
+const constants = require('./constants');
 
 module.exports = [
   {
     label:   'Application',
     submenu: [
       {
-        label: 'About Microsoft Teams',
+        label: constants.TITLE,
         click: () => {
           new BrowserWindow({
             width:       285,
